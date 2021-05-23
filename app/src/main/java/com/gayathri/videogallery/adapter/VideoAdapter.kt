@@ -10,8 +10,8 @@ import com.gayathri.videogallery.model.VideoModel
 import kotlinx.android.synthetic.main.layout_video.view.*
 import kotlin.properties.Delegates
 
-class PopularNewsAdapter(private val clickListener: ItemClickListener) :
-    RecyclerView.Adapter<PopularNewsAdapter.VideoViewHolder>() {
+class VideoAdapter(private val clickListener: ItemClickListener) :
+    RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     var itemList: List<VideoModel> by Delegates.observable(listOf()) { _, _, _ -> notifyDataSetChanged() }
 

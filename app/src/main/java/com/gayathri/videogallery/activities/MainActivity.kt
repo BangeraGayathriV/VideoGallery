@@ -14,21 +14,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gayathri.videogallery.GridSpacingItemDecoration
 import com.gayathri.videogallery.R
 import com.gayathri.videogallery.model.VideoModel
 import com.gayathri.videogallery.`interface`.ItemClickListener
-import com.gayathri.videogallery.adapter.PopularNewsAdapter
+import com.gayathri.videogallery.adapter.VideoAdapter
 import com.gayathri.videogallery.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by inject<MainViewModel>()
-    private lateinit var videoAdapter: PopularNewsAdapter
+    private lateinit var videoAdapter: VideoAdapter
     private var backPressCount: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         //Create Adapter and set up recycler view with adapter
-        videoAdapter = PopularNewsAdapter(itemClickLister)
+        videoAdapter = VideoAdapter(itemClickLister)
         viewModel.setOrientation(resources.configuration.orientation)
         recyclerView?.adapter = videoAdapter
         recyclerView?.addItemDecoration(
