@@ -56,7 +56,6 @@ class MainViewModel(val context: Context) : ViewModel() {
                     videoList.add(videoModel)
                     _video.postValue(videoModel)
                     _videos.postValue(videoList)
-                    Log.d("gayathri_log", "${videoList.size}")
                 }
                 cursor.close()
             }
