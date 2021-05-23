@@ -4,7 +4,22 @@
     android:id="@+id/playerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
+    android:background="@android:color/background_dark"
     app:controller_layout_id="@layout/custom_exo_player_view"
-    android:background="@android:color/background_dark"/>
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@id/exo_extra_controls"
+            style="@style/ExoMediaButton.Mute"
+            android:layout_margin="@dimen/dimen_10dp"
+            android:padding="@dimen/dimen_10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.exoplayer2.ui.PlayerView>

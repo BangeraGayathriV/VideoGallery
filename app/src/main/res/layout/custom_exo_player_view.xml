@@ -51,10 +51,6 @@
             android:id="@id/exo_vr"
             style="@style/ExoMediaButton.VR" />
 
-        <ImageButton
-            android:id="@id/exo_extra_controls"
-            style="@style/ExoMediaButton.Mute" />
-
     </LinearLayout>
 
     <LinearLayout

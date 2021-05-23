@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@color/colorGray"
+    tools:context=".activities.MainActivity">
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_15dp"
-        android:layout_marginTop="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_10dp"
         android:padding="@dimen/dimen_5dp"
         android:text="@string/videos"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +29,9 @@
         android:padding="10dp"
         android:src="@drawable/search_toggle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorPrimary" />
+        app:layout_constraintTop_toTopOf="@id/tvTitle"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
+        app:tint="@color/colorPrimaryDark" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etSearch"
@@ -36,22 +39,24 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_10dp"
         android:background="@drawable/search_bar_bg"
-        app:layout_constraintTop_toBottomOf="@+id/ivSearch"
+        android:hint="@string/search_here"
         android:padding="@dimen/dimen_15dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
+        android:textCursorDrawable="@null"
         android:visibility="gone"
-        android:textColor="@color/colorWhite"/>
+        app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_5dp"
+        android:layout_marginStart="@dimen/dimen_10dp"
         android:layout_marginTop="@dimen/dimen_15dp"
         android:clipToPadding="false"
         android:paddingBottom="30dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSearch"
         app:spanCount="2"
