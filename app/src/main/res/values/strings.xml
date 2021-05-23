@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">VideoGallery</string>
+    <string name="load_please_wait">Loading Please Wait</string>
+    <string name="videos">Videos</string>
+</resources>
