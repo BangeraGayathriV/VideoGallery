@@ -47,7 +47,6 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

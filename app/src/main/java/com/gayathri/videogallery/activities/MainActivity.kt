@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gayathri.videogallery.GridSpacingItemDecoration
@@ -76,6 +77,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleSearchbarVisiblity() {
         etSearch.visibility = if (ivSearch.isSelected) View.VISIBLE else View.GONE
+        recyclerView?.setPadding(
+            0,
+            0,
+            0,
+            if (ivSearch.isSelected) resources.getDimension(R.dimen.padding_bottom_150)
+                .toInt() else resources.getDimension(R.dimen.padding_bottom_80).toInt()
+        )
     }
 
     private fun initRecyclerView() {
