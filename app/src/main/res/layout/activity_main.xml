@@ -28,9 +28,9 @@
         android:layout_margin="@dimen/dimen_5dp"
         android:padding="10dp"
         android:src="@drawable/search_toggle"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvTitle"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
         app:tint="@color/colorPrimaryDark" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -55,7 +55,7 @@
         android:layout_marginStart="@dimen/dimen_10dp"
         android:layout_marginTop="@dimen/dimen_15dp"
         android:clipToPadding="false"
-        android:paddingBottom="30dp"
+        android:paddingBottom="80dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSearch"

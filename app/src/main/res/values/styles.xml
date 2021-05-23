@@ -15,7 +15,6 @@
     <style name="ExoMediaButton.Mute">
         <item name="android:src">@drawable/sound_toggle</item>
         <item name="tint">@color/colorWhite</item>
-        <item name="background">@drawable/background_sound</item>
     </style>
 
 </resources>

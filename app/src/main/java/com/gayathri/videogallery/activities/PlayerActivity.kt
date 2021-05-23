@@ -64,6 +64,7 @@ class PlayerActivity : AppCompatActivity() {
         preparePlayer()
         playerView.player = player
         player.playWhenReady = true
+        exo_extra_controls.isSelected = player.isDeviceMuted
         player.play()
     }
 
@@ -97,11 +98,5 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        player.let {
-            if (it.isPlaying) {
-                it.stop()
-            }
-        }
-
     }
 }
