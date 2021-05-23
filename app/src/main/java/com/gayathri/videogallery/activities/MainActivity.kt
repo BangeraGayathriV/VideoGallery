@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -148,7 +149,10 @@ class MainActivity : AppCompatActivity() {
         when {
             ivSearch.isSelected -> clearSearch()
             backPressCount == 1 -> super.onBackPressed()
-            else -> backPressCount++
+            else -> {
+                backPressCount++
+                Toast.makeText(this, "Back press again to exit the app", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
