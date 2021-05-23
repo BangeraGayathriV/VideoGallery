@@ -1,14 +1,12 @@
-package com.gayathri.evaluationsample.presentation.adapter
+package com.gayathri.videogallery.adapter
 
-import android.graphics.Bitmap
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.gayathri.videogallery.*
+import com.gayathri.videogallery.`interface`.ItemClickListener
+import com.gayathri.videogallery.model.VideoModel
 import kotlinx.android.synthetic.main.layout_video.view.*
 import kotlin.properties.Delegates
 
@@ -20,7 +18,7 @@ class PopularNewsAdapter(private val clickListener: ItemClickListener) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PopularNewsAdapter.VideoViewHolder {
+    ): VideoViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_video, parent, false)
         return VideoViewHolder(view)
@@ -28,7 +26,7 @@ class PopularNewsAdapter(private val clickListener: ItemClickListener) :
 
     override fun getItemCount(): Int = itemList.size
 
-    override fun onBindViewHolder(holder: PopularNewsAdapter.VideoViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
         holder.bindData(itemList[position])
     }
 
@@ -41,14 +39,9 @@ class PopularNewsAdapter(private val clickListener: ItemClickListener) :
             video.createdDate?.let { date ->
                 itemView.tvDate.text = date.getDateTime()
             }
-//            itemView.tvPopularNewsChannelName.text = newsArticle.source.name
             itemView.setOnClickListener {
                 clickListener.onItemClick(video, absoluteAdapterPosition)
             }
         }
     }
-}
-
-private fun ImageView.setImage(bitmap: Bitmap) {
-    Glide.with(this).load(bitmap).fitCenter().into(ivImage)
 }

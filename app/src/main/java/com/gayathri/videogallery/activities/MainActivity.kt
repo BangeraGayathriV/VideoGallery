@@ -1,29 +1,33 @@
-package com.gayathri.videogallery
+package com.gayathri.videogallery.activities
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.gayathri.evaluationsample.presentation.adapter.PopularNewsAdapter
+import com.gayathri.videogallery.GridSpacingItemDecoration
+import com.gayathri.videogallery.R
+import com.gayathri.videogallery.model.VideoModel
+import com.gayathri.videogallery.`interface`.ItemClickListener
+import com.gayathri.videogallery.adapter.PopularNewsAdapter
 import com.gayathri.videogallery.viewmodel.MainViewModel
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by inject<MainViewModel>()
     private lateinit var videoAdapter: PopularNewsAdapter
+    private var backPressCount: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -78,6 +82,11 @@ class MainActivity : AppCompatActivity() {
         videoAdapter = PopularNewsAdapter(itemClickLister)
         viewModel.setOrientation(resources.configuration.orientation)
         recyclerView?.adapter = videoAdapter
+        recyclerView?.addItemDecoration(
+            GridSpacingItemDecoration(
+                this
+            )
+        )
     }
 
     private val itemClickLister = object : ItemClickListener {
@@ -91,17 +100,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setLayoutManager(spanCount: Int) {
         recyclerView?.layoutManager = createLayoutManager(this, spanCount)
-//        val spanCount = 3 // 3 columns
-//        val spacing = 50 // 50px
-//        val includeEdge = true
-//        recyclerView.addItemDecoration(
-//            GridSpacingItemDecoration(
-//                this,
-//                spanCount,
-//                spacing,
-//                includeEdge
-//            )
-//        )
     }
 
     private fun createLayoutManager(
@@ -110,9 +108,13 @@ class MainActivity : AppCompatActivity() {
     ) = GridLayoutManager(context, spanCount)
 
     private fun observeLiveData() {
-        viewModel.getVideosList()
+        getLiveData()
         observeVideosLiveData()
         observeSpanCountLiveData()
+    }
+
+    private fun getLiveData() {
+        viewModel.getVideosList()
     }
 
     private fun observeSearchResultsLiveData() {
@@ -142,8 +144,71 @@ class MainActivity : AppCompatActivity() {
         viewModel.setOrientation(newConfig.orientation)
     }
 
-}
+    override fun onBackPressed() {
+        when {
+            ivSearch.isSelected -> clearSearch()
+            backPressCount == 1 -> super.onBackPressed()
+            else -> backPressCount++
+        }
+    }
 
-interface ItemClickListener {
-    fun onItemClick(item: VideoModel, position: Int)
+    private fun clearSearch() {
+        etSearch.text?.clear()
+        ivSearch.isSelected = false
+        handleSearchbarVisiblity()
+        backPressCount++
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkAppHasPermissionToReadStorage()
+    }
+
+    private fun checkAppHasPermissionToReadStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+            && ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                0
+            )
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        getLiveData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        checkAppHasPermissionToReadStorage()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        removedVideoObserver()
+        removedSearchResultObserver()
+    }
+
+    private fun removedSearchResultObserver() {
+        if (viewModel.searchResults.hasActiveObservers()) {
+            viewModel.searchResults.removeObservers(this)
+        }
+    }
+
+    private fun removedVideoObserver() {
+        if (viewModel.video.hasActiveObservers()) {
+            viewModel.video.removeObservers(this)
+        }
+    }
+
 }
